@@ -25,12 +25,14 @@ public class InputInterpreter implements Observer{
             return;
         }
         String[] inputSplit = input.split(":");
-
+        System.out.println("Command read as: "+inputSplit[0]);
         switch (inputSplit[0]) {
             case "MSG":
+                System.out.println("Do msg");
                 //Do stuff
                 break;
             case "LOGIN":
+                System.out.println("Do LOGIN");
                 //Do stuff
                 break;
             case "LOGOUT":
