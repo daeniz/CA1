@@ -13,6 +13,9 @@ import java.util.Observer;
  * @author daniel
  */
 public class InputInterpreter implements Observer{
+    
+    
+    
     public void processInput(String input) {
         if (input.isEmpty()) {
             return;
@@ -20,18 +23,27 @@ public class InputInterpreter implements Observer{
         String[] inputSplit = input.split(":");
 
         switch (inputSplit[0]) {
-            case "msg":
+            case "MSG":
                 //Do stuff
                 break;
-            case "login":
+            case "LOGIN":
                 //Do stuff
                 break;
-            case "logout":
+            case "LOGOUT":
                 //Do stuff
                 break;
         }
 
     }
+    
+    public void doMsg(){
+        
+    }
+    public void doLogin(){
+        
+    }
+        
+       
 
     @Override
     public void update(Observable o, Object arg) {
