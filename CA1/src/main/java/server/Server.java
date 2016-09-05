@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,7 +20,7 @@ import java.util.logging.Logger;
  */
 public class Server {       //Very much just the basic start of the Echo-server
     public static void main(String[] args) {
-        
+    List<String> list = new CopyOnWriteArrayList();    
     String ip;
     int port;
         if(args.length ==2){
@@ -35,7 +37,8 @@ public class Server {       //Very much just the basic start of the Echo-server
         while (true){
         Socket socket = ss.accept();
         System.out.println("New Client Connected!");    //Rework for logger
-        handleClient(socket);  // Needs multithreading
+        new Thread(new ClientHandler(socket, list)).start();
+        //handleClient(socket);  // Needs multithreading
         }
         } catch (IOException ex) {
             // Add logger

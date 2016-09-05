@@ -14,12 +14,13 @@ import java.io.PrintWriter;
  * @author danie
  */
 public class OutputCreator {
-    PrintWriter pw = new PrintWriter(new OutputStream() {  //Insert outputstream
-        @Override
-        public void write(int b) throws IOException {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-    },true);
+    PrintWriter pw;
+    
+    public OutputCreator(PrintWriter pw){
+        this.pw=pw;
+    }
+            
+            
     
     public void doMsg(String msg, String[] users){
         if (users.length==0){

@@ -5,6 +5,7 @@
  */
 package server;
 
+import java.io.PrintWriter;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -13,8 +14,11 @@ import java.util.Observer;
  * @author daniel
  */
 public class InputInterpreter implements Observer{
+    OutputCreator oc;
     
-    
+    public InputInterpreter(PrintWriter pw){   // This is not elegant, let us debate!
+        oc = new OutputCreator(pw);
+    }
     
     public void processInput(String input) {
         if (input.isEmpty()) {
