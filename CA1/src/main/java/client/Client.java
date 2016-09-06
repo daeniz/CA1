@@ -6,6 +6,7 @@
 package client;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -21,7 +22,7 @@ import server.Server;
  */
 public class Client implements Observer {
 
-    Socket socket;
+    static Socket socket;
     private int port;
     private InetAddress serverAddress;
     private Scanner input;
@@ -56,7 +57,7 @@ public class Client implements Observer {
     }
 
     public static void main(String[] args) throws IOException {
-        
+        Scanner userInput = new Scanner(socket.getInputStream());
         String ip = "localHost";
         int port = 9000;
         
@@ -71,12 +72,17 @@ public class Client implements Observer {
             port = 9000;
         }
         
-//        try {
-//        Client client = new Client();
-//        client.connect(ip, port);
-//            System.out.println("Telling everyone that we have connected");
-//            client.send(ip);
-//        }
+        try {
+        Client client = new Client();
+        client.connect(ip, port);
+            System.out.println("Please enter your unique Username");
+            String userName = userInput.nextLine();
+            client.send("LOGIN:" + userName);
+        }
+        
+        catch (IOException ex) {
+        
+        }
         
     }
 }
