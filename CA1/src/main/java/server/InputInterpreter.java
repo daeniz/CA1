@@ -29,6 +29,7 @@ public class InputInterpreter implements Observer{
         switch (inputSplit[0]) {
             case "MSG":
                 System.out.println("Do msg");
+                doMsg(inputSplit);
                 //Do stuff
                 break;
             case "LOGIN":
@@ -42,11 +43,19 @@ public class InputInterpreter implements Observer{
 
     }
     
-    public void doMsg(){
+    public void doMsg(String[] inputSplit){
+        //Check if logged in //Else blow up
         
+        String[] users = inputSplit[1].split(",");
+        String msg = "";
+        if (inputSplit[2]!=null && inputSplit.length>0) msg=inputSplit[2];
+        
+        for (int i = 1; i < users.length; i++) {
+                    
+                }
     }
     public void doLogin(){
-        
+        //check if already logged in
     }
         
        
