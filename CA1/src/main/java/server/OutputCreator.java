@@ -31,10 +31,37 @@ public class OutputCreator {
         System.out.println("users length: "+users.length);
         if (users.length==1)
         {
+            if (!users[0].equals("")){
+            System.out.println("users[0]:"+users[0]+".");
             for (User client : userList) {
+                if (client.getUserName().equals(users[0])){
+                    System.out.println("Found "+client.getUserName());
+                    doMsgRes(client, user.getUserName(),msg);
+                    return;
+                }
+            }
+                System.out.println("User not FOUND! You nitwitted SOB");
+                return;
+            }
+            System.out.println("Sending to everyone!");
+            for (User client : userList) {
+                System.out.println("Sending to: "+client.getUserName());
                 doMsgRes(client, user.getUserName(),msg);
+                //return;
+            }
+            
+        }
+        else if (users.length>1){
+            for (int i = 0; i < users.length; i++) {
+                for (User client : userList) {
+                    if (client.getUserName().equals(users[i])){
+                        doMsgRes(client, user.getUserName(),msg);
+                    }
+                }
             }
         }
+        
+        
         // Insert code to find the right users in the userlist
         //pw.write("msg:" + msg);
     }
