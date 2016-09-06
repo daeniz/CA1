@@ -34,6 +34,7 @@ public class ClientHandler extends Observable implements Runnable {
         try (Scanner scan = new Scanner(socket.getInputStream())) {
             
             user = new User(null, socket);
+            userList.add(user);
             InputInterpreter ii = new InputInterpreter(user, userList);
             this.addObserver(ii);
             String message = "";
