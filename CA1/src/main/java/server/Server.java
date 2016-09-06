@@ -59,4 +59,8 @@ public class Server {       //Very much just the basic start of the Echo-server
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public void runServer(String ip, int port) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

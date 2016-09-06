@@ -48,8 +48,13 @@ public class OutputCreator {
     
     public void sendClientList(){
         String clients="CLIENTLIST:";
+        boolean first = true;
         for (User client : userList) {
-            clients+=client.getUserName();
+            if (first){
+                clients+=client.getUserName();
+                first=false;
+            }
+            else clients+=","+client.getUserName();
         }
         for (User client : userList) {
             client.getPw().println(clients);
