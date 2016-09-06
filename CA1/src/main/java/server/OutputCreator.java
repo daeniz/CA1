@@ -16,30 +16,43 @@ import java.util.List;
  */
 public class OutputCreator {
 
-    PrintWriter pw;
+    User user;
     List<User> userList;
+    PrintWriter pw;
     
-    public OutputCreator(PrintWriter pw,List<User> userList){
-        this.pw=pw;
+    public OutputCreator(User user,List<User> userList){
+        this.user=user;
         this.userList=userList;
     }
             
             
     
     public void doMsg(String msg, String[] users){
-        if (users.length==1 && users[0].equals("")){
+        System.out.println("users length: "+users.length);
+        if (users.length==1)
+        {
+            System.out.println("Size of userList: "+userList.size());
             for (User user : userList) {
                 doMsgRes(user.getUserName(),msg);
             }
-            //pw.write("msg::"+msg);
         }
         // Insert code to find the right users in the userlist
-        pw.write("msg:" + msg);
+        //pw.write("msg:" + msg);
     }
 
     public void doMsgRes(String msgSender, String msg) {
         System.out.println("Do MSG Response");
         System.out.println("msgRes:" + msgSender + ":" + msg);
-        pw.write("msgRes:" + msgSender + ":" + msg);
+        user.getPw().println("msgRes:" + msgSender + ":" + msg);
+    }
+    
+    public void sendClientList(){
+        String clients="CLIENTLIST:";
+        for (User client : userList) {
+            clients+=client.getUserName();
+        }
+        for (User client : userList) {
+            client.getPw().println(clients);
+        }
     }
 }
