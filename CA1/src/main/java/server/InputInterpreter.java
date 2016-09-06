@@ -59,13 +59,20 @@ public class InputInterpreter implements Observer{
     }
     public void doLogin(String[] inputSplit){
         if (user.getUserName()!=null){
-            //if username assigned ignore login.
+            //if username assigned ignore login with message.
         }
         for (User user1 : userList) {
             if(user1.getUserName().contentEquals(inputSplit[1])){
                 System.out.println("User already exists");
+                //how many tries?
+                return;
             }
+            
         }
+        //Create user
+        user.setUserName(inputSplit[1]);
+        //Send welcome message
+        
         //check if already logged in
     }
         

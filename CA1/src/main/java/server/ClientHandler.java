@@ -32,8 +32,8 @@ public class ClientHandler extends Observable implements Runnable {
 
         try (Scanner scan = new Scanner(socket.getInputStream())) {
             pw = new PrintWriter(socket.getOutputStream(), true);
-            User user = new User("",socket);
-            InputInterpreter ii = new InputInterpreter(user,userList);
+            User user = new User(null, socket);
+            InputInterpreter ii = new InputInterpreter(user, userList);
             this.addObserver(ii);
             String message = "";
             while (!message.equals("LOGOUT")) {
@@ -44,7 +44,9 @@ public class ClientHandler extends Observable implements Runnable {
                 notifyObservers(message);                                       //Observer pattern seems pointless now that I think about it. I'm just quite fond of it.
 
             }
+            userList.remove(user);
         }
+
         pw.close();
         socket.close();
 
