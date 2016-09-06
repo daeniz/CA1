@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Scanner;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,7 +22,7 @@ import java.util.logging.Logger;
  */
 public class ClientHandler extends Observable implements Runnable {
 
-    private List<User> clientList = new ArrayList<>();
+    private List<User> clientList = new CopyOnWriteArrayList<>();
     Socket socket;
 
     //The main logic of this class, takes the connection Socket as a parameter
