@@ -7,6 +7,7 @@ package server;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.net.Socket;
 
 /**
  *
@@ -15,18 +16,17 @@ import java.util.List;
 public class User {
     
     private String userName;
-
+    private Socket userSocket;
     
-    private int userSocket;
      
     //Default constructor
     public User() 
     {
         this.userName = "";
-        this.userSocket = 0;
+        this.userSocket = null;
     }
     
-    public User(String userName, int userSocket) 
+    public User(String userName, Socket userSocket) 
     {
         this.userName = userName;
         this.userSocket = userSocket;
@@ -36,7 +36,7 @@ public class User {
         return userName;
     }
     //Gets the user's socket (unique for everyone)
-    public int getUserSocket() {
+    public Socket getUserSocket() {
         return userSocket;
     }
 
@@ -50,7 +50,7 @@ public class User {
     /**
      * @param userSocket the userSocket to set
      */
-    public void setUserSocket(int userSocket) {
+    public void setUserSocket(Socket userSocket) {
         this.userSocket = userSocket;
     }
     
