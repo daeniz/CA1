@@ -31,7 +31,6 @@ public class OutputCreator {
         System.out.println("users length: "+users.length);
         if (users.length==1)
         {
-            System.out.println("Size of userList: "+userList.size());
             for (User client : userList) {
                 doMsgRes(client, user.getUserName(),msg);
             }
