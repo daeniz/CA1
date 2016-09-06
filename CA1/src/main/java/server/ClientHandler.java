@@ -33,6 +33,7 @@ public class ClientHandler extends Observable implements Runnable {
         try (Scanner scan = new Scanner(socket.getInputStream())) {
             pw = new PrintWriter(socket.getOutputStream(), true);
             InputInterpreter ii = new InputInterpreter(pw);
+            this.addObserver(ii);
             String message = "";
             while (!message.equals("LOGOUT")) {
                 message = scan.nextLine();
@@ -61,6 +62,7 @@ public class ClientHandler extends Observable implements Runnable {
     public void run() {
         try {
             handleClient(socket);
+            System.out.println("Client handled");
         } catch (IOException ex) {
             //Insert logging
         }
@@ -70,5 +72,6 @@ public class ClientHandler extends Observable implements Runnable {
     public ClientHandler(Socket socket, List clientList){
         
         this.socket=socket;
+        this.clientList=clientList;
     }
 }
