@@ -24,13 +24,15 @@ public class OutputCreator {
     
     public void doMsg(String msg, String[] users){
         if (users.length==0){
-            pw.write("msg::"+msg);
+            for (User user : userlist) {
+                doMsgRes("username",msg);
+            }
+            //pw.write("msg::"+msg);
         }
     pw.write("msg:"+msg);
 }
     
     public void doMsgRes(String msgSender, String msg){
-        
     pw.write("msgRes:"+msgSender+":"+msg);
 }
 }
