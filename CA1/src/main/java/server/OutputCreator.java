@@ -40,6 +40,8 @@ public class OutputCreator {
         //pw.write("msg:" + msg);
     }
     
+    
+    
     public void userLoggedInMsgRes(User user){
         for (User user1 : userList) {
             if(user1 != user ){
@@ -63,6 +65,7 @@ public class OutputCreator {
         System.out.println("msgRes:" + msgSender + ":" + msg);
         receiver.getPw().println("msgRes:" + msgSender + ":" + msg);
     }
+    
     
     public void sendClientList(){
         String clients="CLIENTLIST:";
