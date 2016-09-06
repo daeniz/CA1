@@ -14,25 +14,24 @@ import java.io.PrintWriter;
  * @author danie
  */
 public class OutputCreator {
+
     PrintWriter pw;
-    
-    public OutputCreator(PrintWriter pw){
-        this.pw=pw;
+
+    public OutputCreator(PrintWriter pw) {
+        this.pw = pw;
     }
-            
-            
-    
-    public void doMsg(String msg, String[] users){
-        if (users.length==0){
+
+    public void doMsg(String msg, String[] users) {
+        if (users.length == 0) {
             for (User user : userlist) {
-                doMsgRes("username",msg);
+                doMsgRes("username", msg);
             }
             //pw.write("msg::"+msg);
         }
-    pw.write("msg:"+msg);
-}
-    
-    public void doMsgRes(String msgSender, String msg){
-    pw.write("msgRes:"+msgSender+":"+msg);
-}
+        pw.write("msg:" + msg);
+    }
+
+    public void doMsgRes(String msgSender, String msg) {
+        pw.write("msgRes:" + msgSender + ":" + msg);
+    }
 }
