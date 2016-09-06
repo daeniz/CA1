@@ -58,9 +58,13 @@ public class InputInterpreter implements Observer{
         oc.doMsg(msg, users);   //Call the OutputCreator with the needed parameters
     }
     public void doLogin(String[] inputSplit){
+        if (inputSplit.length<=1){
+            
+            return;
+        }
         if (user.getUserName()!=null){
             //if username assigned ignore login with message.
-            System.out.println("user already logged in");
+            user.getPw();
             return;
         }
         for (User user1 : userList) {

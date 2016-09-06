@@ -71,12 +71,12 @@ public class Client implements Observer {
             port = 9000;
         }
         
-        try {
-        Client client = new Client();
-        client.connect(ip, port);
-            System.out.println("Telling everyone that we have connected");
-            client.send(ip);
-        }
+//        try {
+//        Client client = new Client();
+//        client.connect(ip, port);
+//            System.out.println("Telling everyone that we have connected");
+//            client.send(ip);
+//        }
         
     }
 }
