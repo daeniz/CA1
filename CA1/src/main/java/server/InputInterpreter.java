@@ -6,6 +6,7 @@
 package server;
 
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -16,7 +17,7 @@ import java.util.Observer;
 public class InputInterpreter implements Observer{
     OutputCreator oc;
     
-    public InputInterpreter(PrintWriter pw){   // This is not elegant, let us debate!
+    public InputInterpreter(PrintWriter pw, List userList){   // This is not elegant, let us debate!
         oc = new OutputCreator(pw);
     }
     
@@ -44,15 +45,13 @@ public class InputInterpreter implements Observer{
     }
     
     public void doMsg(String[] inputSplit){
-        //Check if logged in //Else blow up
+        //Check: if logged in->cont //Else blow up
         
-        String[] users = inputSplit[1].split(",");
+        String[] users = inputSplit[1].split(",");  //Split so we have an array of users to send to
         String msg = "";
-        if (inputSplit[2]!=null && inputSplit.length>0) msg=inputSplit[2];
+        if (inputSplit[2]!=null && inputSplit.length>0) msg=inputSplit[2];  // If there is a message...
         
-        for (int i = 1; i < users.length; i++) {
-                    
-                }
+        oc.doMsg(msg, users);   //Call the OutputCreator with the needed parameters
     }
     public void doLogin(){
         //check if already logged in
