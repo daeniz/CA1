@@ -29,10 +29,11 @@ public class ClientHandler extends Observable implements Runnable {
     public void handleClient(Socket socket) throws IOException {
 
         PrintWriter pw;
+        User user;
 
         try (Scanner scan = new Scanner(socket.getInputStream())) {
-            pw = new PrintWriter(socket.getOutputStream(), true);
-            User user = new User("",socket);
+            
+            user = new User("",socket);
             InputInterpreter ii = new InputInterpreter(user,userList);
             this.addObserver(ii);
             String message = "";
@@ -45,7 +46,7 @@ public class ClientHandler extends Observable implements Runnable {
 
             }
         }
-        pw.close();
+        user.getPw().close();
         socket.close();
 
     }

@@ -16,11 +16,12 @@ import java.util.List;
  */
 public class OutputCreator {
 
-    PrintWriter pw;
+    User user;
     List<User> userList;
+    PrintWriter pw;
     
     public OutputCreator(User user,List<User> userList){
-        this.pw=pw;
+        this.user=user;
         this.userList=userList;
     }
             

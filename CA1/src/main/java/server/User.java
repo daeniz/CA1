@@ -5,9 +5,11 @@
  */
 package server;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -17,10 +19,18 @@ public class User {
     
     private String userName;
     private Socket userSocket;
-    
+    private PrintWriter pw;
+
+    public PrintWriter getPw() {
+        return pw;
+    }
+
+    public void setPw(PrintWriter pw) {
+        this.pw = pw;
+    }
      
     //Default constructor
-    public User() 
+    public User() //Why?... Just why?
     {
         this.userName = "";
         this.userSocket = null;
@@ -30,6 +40,11 @@ public class User {
     {
         this.userName = userName;
         this.userSocket = userSocket;
+        try {
+            pw = new PrintWriter(userSocket.getOutputStream(), true);
+        } catch (IOException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     //Gets the userName
     public String getUserName() {
