@@ -8,6 +8,7 @@ package server;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.List;
 
 /**
  *
@@ -15,17 +16,19 @@ import java.io.PrintWriter;
  */
 public class OutputCreator {
     PrintWriter pw;
+    List<User> userList;
     
-    public OutputCreator(PrintWriter pw){
+    public OutputCreator(PrintWriter pw,List<User> userList){
         this.pw=pw;
+        this.userList=userList;
     }
             
             
     
     public void doMsg(String msg, String[] users){
         if (users.length==0){
-            for (User user : userlist) {
-                doMsgRes("username",msg);
+            for (User user : userList) {
+                doMsgRes(user.getUserName(),msg);
             }
             //pw.write("msg::"+msg);
         }

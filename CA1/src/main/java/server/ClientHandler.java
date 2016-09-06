@@ -67,7 +67,7 @@ public class ClientHandler extends Observable implements Runnable {
 
     }
 
-    public ClientHandler(Socket socket, List userList) {
+    public ClientHandler(Socket socket, List<User> userList) {
 
         this.socket = socket;
         this.userList = userList;
