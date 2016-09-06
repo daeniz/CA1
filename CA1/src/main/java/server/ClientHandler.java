@@ -28,23 +28,22 @@ public class ClientHandler extends Observable implements Runnable {
     //The main logic of this class, takes the connection Socket as a parameter
     public void handleClient(Socket socket) throws IOException {
 
-        PrintWriter pw;
+       
         User user;
 
         try (Scanner scan = new Scanner(socket.getInputStream())) {
             
-            user = new User("",socket);
-            InputInterpreter ii = new InputInterpreter(user,userList);
+            user = new User(null, socket);
+            InputInterpreter ii = new InputInterpreter(user, userList);
             this.addObserver(ii);
             String message = "";
             while (!message.equals("LOGOUT")) {
                 message = scan.nextLine();
-
-                //To be implemented later with the connected classes
                 setChanged();
                 notifyObservers(message);                                       //Observer pattern seems pointless now that I think about it. I'm just quite fond of it.
 
             }
+            userList.remove(user);
         }
         user.getPw().close();
         socket.close();
