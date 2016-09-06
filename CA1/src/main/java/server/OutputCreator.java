@@ -27,16 +27,19 @@ public class OutputCreator {
             
     
     public void doMsg(String msg, String[] users){
-        if (users.length==0){
+        if (users.length==1 && users[0].equals("")){
             for (User user : userList) {
                 doMsgRes(user.getUserName(),msg);
             }
             //pw.write("msg::"+msg);
         }
+        // Insert code to find the right users in the userlist
         pw.write("msg:" + msg);
     }
 
     public void doMsgRes(String msgSender, String msg) {
+        System.out.println("Do MSG Response");
+        System.out.println("msgRes:" + msgSender + ":" + msg);
         pw.write("msgRes:" + msgSender + ":" + msg);
     }
 }
