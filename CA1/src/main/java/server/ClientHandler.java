@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  */
 public class ClientHandler extends Observable implements Runnable {
 
-    private List<User> clientList = new CopyOnWriteArrayList<>();
+    private List<User> userList;
     Socket socket;
 
     //The main logic of this class, takes the connection Socket as a parameter
@@ -32,7 +32,7 @@ public class ClientHandler extends Observable implements Runnable {
 
         try (Scanner scan = new Scanner(socket.getInputStream())) {
             pw = new PrintWriter(socket.getOutputStream(), true);
-            InputInterpreter ii = new InputInterpreter(pw);
+            InputInterpreter ii = new InputInterpreter(pw,userList);
             this.addObserver(ii);
             String message = "";
             while (!message.equals("LOGOUT")) {
@@ -54,7 +54,7 @@ public class ClientHandler extends Observable implements Runnable {
     public void addUser(String name, Socket socket) {
 
         //Adding the userName variable to the list of users
-        clientList.add(new User(name, socket));
+        userList.add(new User(name, socket));
     }
 
     @Override
@@ -68,9 +68,9 @@ public class ClientHandler extends Observable implements Runnable {
 
     }
 
-    public ClientHandler(Socket socket, List clientList) {
+    public ClientHandler(Socket socket, List userList) {
 
         this.socket = socket;
-        this.clientList = clientList;
+        this.userList = userList;
     }
 }
