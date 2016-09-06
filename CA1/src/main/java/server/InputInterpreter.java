@@ -16,9 +16,11 @@ import java.util.Observer;
  */
 public class InputInterpreter implements Observer{
     OutputCreator oc;
+    List<User> userList;
     
-    public InputInterpreter(PrintWriter pw, List userList){   // This is not elegant, let us debate!
-        oc = new OutputCreator(pw);
+    public InputInterpreter(PrintWriter pw, List<User> userList){   // This is not elegant, let us debate!
+        oc = new OutputCreator(pw,userList);
+        this.userList=userList;
     }
     
     public void processInput(String input) {

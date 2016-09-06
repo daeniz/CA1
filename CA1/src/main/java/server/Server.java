@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 public class Server {       //Very much just the basic start of the Echo-server
 
     public static void main(String[] args) {
-    List<String> userList = new CopyOnWriteArrayList();    
+    List<User> userList = new CopyOnWriteArrayList();    
     String ip;
     int port;
         if(args.length ==2){
