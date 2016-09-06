@@ -6,6 +6,7 @@
 package server;
 
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -16,7 +17,7 @@ import java.util.Observer;
 public class InputInterpreter implements Observer{
     OutputCreator oc;
     
-    public InputInterpreter(PrintWriter pw){   // This is not elegant, let us debate!
+    public InputInterpreter(PrintWriter pw, List userList){   // This is not elegant, let us debate!
         oc = new OutputCreator(pw);
     }
     

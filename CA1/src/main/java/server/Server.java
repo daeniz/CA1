@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  */
 public class Server {       //Very much just the basic start of the Echo-server
     public static void main(String[] args) {
-    List<String> list = new CopyOnWriteArrayList();    
+    List<String> userList = new CopyOnWriteArrayList();    
     String ip;
     int port;
         if(args.length ==2){
@@ -41,7 +41,7 @@ public class Server {       //Very much just the basic start of the Echo-server
         Socket socket = ss.accept();
         System.out.println("New Client Connected!");    //Rework to broadcast
         Logger.getLogger(Log.LOG_NAME).log(Level.INFO, "New client connected"); //Add the connected client's name here
-        new Thread(new ClientHandler(socket, list)).start();
+        new Thread(new ClientHandler(socket, userList)).start();
         //handleClient(socket);  // Needs multithreading
         }
         } catch (IOException ex) {
