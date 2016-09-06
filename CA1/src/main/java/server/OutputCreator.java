@@ -39,6 +39,24 @@ public class OutputCreator {
         // Insert code to find the right users in the userlist
         //pw.write("msg:" + msg);
     }
+    
+    public void userLoggedInMsgRes(User user){
+        for (User user1 : userList) {
+            if(user1 != user ){
+                user1.getPw().println("MSGRES:Server: " + user.getUserName() + " logged in!");
+            }
+        }
+        user.getPw().println("MSGRES:Server:Welcome " + user.getUserName() + "!");
+    }
+    
+    public void userLoggedOutMsgRes(User user){
+        for (User user1 : userList) {
+            if(user1 != user ){
+                user1.getPw().println("MSGRES:Server: " + user.getUserName() + " logged out!");
+            }
+        }
+        user.getPw().println("MSGRES:Server:Godbye " + user.getUserName() + "!");
+    }
 
     public void doMsgRes(User receiver, String msgSender, String msg) {
         System.out.println("Do MSG Response");
