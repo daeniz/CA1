@@ -28,7 +28,9 @@ public class OutputCreator {
             
     
     public void doMsg(String msg, String[] users){
-        if (users.length==1 && users[0].equals("")){
+        System.out.println("users length: "+users.length);
+        if (users.length==1)
+        {
             for (User user : userList) {
                 doMsgRes(user.getUserName(),msg);
             }
