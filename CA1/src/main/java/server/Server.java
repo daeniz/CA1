@@ -40,7 +40,6 @@ public class Server {       //Very much just the basic start of the Echo-server
             System.out.println("Server started!, listening on "+port+ " "+", bound to "+ ip);  // Rework for logger
         while (true){
         Socket socket = ss.accept();
-        System.out.println("New Client Connected!");    //Rework to broadcast
         Logger.getLogger(Log.LOG_NAME).log(Level.INFO, "New client connected"); //Add the connected client's name here
         new Thread(new ClientHandler(socket, userList)).start();
         //handleClient(socket);  // Needs multithreading

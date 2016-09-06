@@ -14,14 +14,15 @@ import java.util.Observer;
  *
  * @author daniel
  */
-public class InputInterpreter implements Observer{
-    OutputCreator oc;
-    List<User> userList;
-    User user;
+public class InputInterpreter implements Observer {
     
-    public InputInterpreter(User user, List<User> userList){   // This is not elegant, let us debate!
-        oc = new OutputCreator(user,userList);
-        this.userList=userList;
+    private OutputCreator oc;
+    private List<User> userList;
+    private User user;
+    
+    public InputInterpreter(User user, List<User> userList) {   // This is not elegant, let us debate!
+        oc = new OutputCreator(user, userList);
+        this.userList = userList;
         this.user = user;
     }
     
@@ -30,7 +31,7 @@ public class InputInterpreter implements Observer{
             return;
         }
         String[] inputSplit = input.split(":");
-        System.out.println("Command read as: "+inputSplit[0]);
+        System.out.println("Command read as: " + inputSplit[0]);
         switch (inputSplit[0]) {
             case "MSG":
                 System.out.println("Do msg");
@@ -42,46 +43,62 @@ public class InputInterpreter implements Observer{
                 doLogin(inputSplit);
                 break;
             case "LOGOUT":
-                //Do stuff
+                logout();
                 break;
         }
-
+        
     }
     
-    public void doMsg(String[] inputSplit){
+    public void doMsg(String[] inputSplit) {
         //Check: if logged in->cont //Else blow up
-        
+
         String[] users = inputSplit[1].split(",");  //Split so we have an array of users to send to
         String msg = "";
-        if (inputSplit[2]!=null && inputSplit.length>0) msg=inputSplit[2];  // If there is a message...
-        
+        if (inputSplit[2] != null && inputSplit.length > 0) {
+            msg = inputSplit[2];  // If there is a message...
+        }
         oc.doMsg(msg, users);   //Call the OutputCreator with the needed parameters
     }
-    public void doLogin(String[] inputSplit){
-        if (user.getUserName()!=null){
+    
+    public void doLogin(String[] inputSplit) {
+        if (inputSplit.length <= 1) {
+            
+            return;
+        }
+        if (user.getUserName() != null) {
             //if username assigned ignore login with message.
+            user.getPw().println("MSGRES:Server:You are already logged in!");
+            return;
         }
         for (User user1 : userList) {
-            if(user1.getUserName()!=null && user1.getUserName().contentEquals(inputSplit[1])){
-                System.out.println("User already exists");
+            if (user1.getUserName() != null && user1.getUserName().contentEquals(inputSplit[1])) {
+                user.getPw().println("MSGRES:Server:Username exists. Try again!");
                 //how many tries?
                 return;
             }
             
         }
         //Create user
+        System.out.println("Created user");
         user.setUserName(inputSplit[1]);
+        oc.userLoggedInMsgRes(user);
+        //user.getPw().println("Welcome " + user.getUserName() + "!");
+        
         oc.sendClientList(); //Maybe this is a candidate for Observer pattern?
         //Send welcome message
-        
+
         //check if already logged in
     }
-        
-       
-
+    
     @Override
     public void update(Observable o, Object arg) {
         processInput((String) arg);
-
+        
+    }
+    
+    private void logout() {
+        oc.userLoggedOutMsgRes(user);
+        userList.remove(user);
+        oc.sendClientList();
     }
 }
