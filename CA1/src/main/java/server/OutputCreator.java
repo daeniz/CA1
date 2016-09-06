@@ -35,7 +35,6 @@ public class OutputCreator {
             for (User user : userList) {
                 doMsgRes(user.getUserName(),msg);
             }
-            //pw.write("msg::"+msg);
         }
         // Insert code to find the right users in the userlist
         //pw.write("msg:" + msg);
@@ -44,6 +43,16 @@ public class OutputCreator {
     public void doMsgRes(String msgSender, String msg) {
         System.out.println("Do MSG Response");
         System.out.println("msgRes:" + msgSender + ":" + msg);
-        pw.write("msgRes:" + msgSender + ":" + msg);
+        user.getPw().println("msgRes:" + msgSender + ":" + msg);
+    }
+    
+    public void sendClientList(){
+        String clients="CLIENTLIST:";
+        for (User client : userList) {
+            clients+=client.getUserName();
+        }
+        for (User client : userList) {
+            client.getPw().println(clients);
+        }
     }
 }

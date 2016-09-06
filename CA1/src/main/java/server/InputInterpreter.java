@@ -71,6 +71,7 @@ public class InputInterpreter implements Observer{
         }
         //Create user
         user.setUserName(inputSplit[1]);
+        oc.sendClientList(); //Maybe this is a candidate for Observer pattern?
         //Send welcome message
         
         //check if already logged in
