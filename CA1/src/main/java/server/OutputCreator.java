@@ -31,14 +31,42 @@ public class OutputCreator {
         System.out.println("users length: "+users.length);
         if (users.length==1)
         {
-            System.out.println("Size of userList: "+userList.size());
+            if (!users[0].equals("")){
+            System.out.println("users[0]:"+users[0]+".");
             for (User client : userList) {
+                if (client.getUserName().equals(users[0])){
+                    System.out.println("Found "+client.getUserName());
+                    doMsgRes(client, user.getUserName(),msg);
+                    return;
+                }
+            }
+                System.out.println("User not FOUND! You nitwitted SOB");
+                return;
+            }
+            System.out.println("Sending to everyone!");
+            for (User client : userList) {
+                System.out.println("Sending to: "+client.getUserName());
                 doMsgRes(client, user.getUserName(),msg);
+                //return;
+            }
+            
+        }
+        else if (users.length>1){
+            for (int i = 0; i < users.length; i++) {
+                for (User client : userList) {
+                    if (client.getUserName().equals(users[i])){
+                        doMsgRes(client, user.getUserName(),msg);
+                    }
+                }
             }
         }
+        
+        
         // Insert code to find the right users in the userlist
         //pw.write("msg:" + msg);
     }
+    
+    
     
     public void userLoggedInMsgRes(User user){
         for (User user1 : userList) {
@@ -64,9 +92,10 @@ public class OutputCreator {
         receiver.getPw().println("msgRes:" + msgSender + ":" + msg);
     }
     
+    
     public void sendClientList(){
         String clients="CLIENTLIST:";
-        boolean first = true;
+        boolean first = true;   //Boolean for controlling the , seperator so it only comes between clientnames
         for (User client : userList) {
             if (first){
                 clients+=client.getUserName();
