@@ -47,7 +47,7 @@ public class OutputCreator {
     
     public void sendClientList(){
         String clients="CLIENTLIST:";
-        boolean first = true;
+        boolean first = true;   //Boolean for controlling the , seperator so it only comes between clientnames
         for (User client : userList) {
             if (first){
                 clients+=client.getUserName();
