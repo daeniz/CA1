@@ -60,6 +60,8 @@ public class InputInterpreter implements Observer{
     public void doLogin(String[] inputSplit){
         if (user.getUserName()!=null){
             //if username assigned ignore login with message.
+            System.out.println("user already logged in");
+            return;
         }
         for (User user1 : userList) {
             if(user1.getUserName().contentEquals(inputSplit[1])){
@@ -70,6 +72,7 @@ public class InputInterpreter implements Observer{
             
         }
         //Create user
+        System.out.println("Created user");
         user.setUserName(inputSplit[1]);
         //Send welcome message
         

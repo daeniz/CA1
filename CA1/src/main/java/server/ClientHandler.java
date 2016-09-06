@@ -33,10 +33,11 @@ public class ClientHandler extends Observable implements Runnable {
         try (Scanner scan = new Scanner(socket.getInputStream())) {
             pw = new PrintWriter(socket.getOutputStream(), true);
             User user = new User(null, socket);
+            userList.add(user);
             InputInterpreter ii = new InputInterpreter(user, userList);
             this.addObserver(ii);
             String message = "";
-            while (!message.equals("LOGOUT")) {
+            while (!message.equals("LOGOUT")&&socket.isConnected()) {
                 message = scan.nextLine();
 
                 //To be implemented later with the connected classes
