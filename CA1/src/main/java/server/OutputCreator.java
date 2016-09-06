@@ -19,7 +19,7 @@ public class OutputCreator {
     PrintWriter pw;
     List<User> userList;
     
-    public OutputCreator(PrintWriter pw,List<User> userList){
+    public OutputCreator(User user,List<User> userList){
         this.pw=pw;
         this.userList=userList;
     }
