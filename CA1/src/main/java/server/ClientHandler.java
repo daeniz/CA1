@@ -8,6 +8,7 @@ package server;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Scanner;
@@ -20,16 +21,14 @@ import java.util.logging.Logger;
  */
 public class ClientHandler extends Observable implements Runnable {
 
-    
-
-    private List<String> clientList;
+    private List<User> clientList = new ArrayList<>();
     Socket socket;
 
     //The main logic of this class, takes the connection Socket as a parameter
     public void handleClient(Socket socket) throws IOException {
 
         PrintWriter pw;
-        
+
         try (Scanner scan = new Scanner(socket.getInputStream())) {
             pw = new PrintWriter(socket.getOutputStream(), true);
             InputInterpreter ii = new InputInterpreter(pw);
@@ -37,11 +36,11 @@ public class ClientHandler extends Observable implements Runnable {
             String message = "";
             while (!message.equals("LOGOUT")) {
                 message = scan.nextLine();
-                
+
                 //To be implemented later with the connected classes
                 setChanged();
                 notifyObservers(message);                                       //Observer pattern seems pointless now that I think about it. I'm just quite fond of it.
-                
+
             }
         }
         pw.close();
@@ -51,11 +50,10 @@ public class ClientHandler extends Observable implements Runnable {
 
     //Adds the user to the ClientList by passing the assumed unique name
     //as the parameter
-    public void addUser(String name) {
-        String userName = name;
-        
+    public void addUser(String name, Socket socket) {
+
         //Adding the userName variable to the list of users
-        clientList.add(userName);
+        clientList.add(new User(name, socket));
     }
 
     @Override
@@ -68,10 +66,10 @@ public class ClientHandler extends Observable implements Runnable {
         }
 
     }
-    
-    public ClientHandler(Socket socket, List clientList){
-        
-        this.socket=socket;
-        this.clientList=clientList;
+
+    public ClientHandler(Socket socket, List clientList) {
+
+        this.socket = socket;
+        this.clientList = clientList;
     }
 }
