@@ -16,18 +16,21 @@ import java.util.List;
  */
 public class OutputCreator {
 
-    PrintWriter pw;
+    User user;
     List<User> userList;
+    PrintWriter pw;
     
     public OutputCreator(User user,List<User> userList){
-        this.pw=pw;
+        this.user=user;
         this.userList=userList;
     }
             
             
     
     public void doMsg(String msg, String[] users){
-        if (users.length==1 && users[0].equals("")){
+        System.out.println("users length: "+users.length);
+        if (users.length==1)
+        {
             for (User user : userList) {
                 doMsgRes(user.getUserName(),msg);
             }
