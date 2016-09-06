@@ -31,13 +31,14 @@ public class OutputCreator {
         System.out.println("users length: "+users.length);
         if (users.length==1)
         {
+            System.out.println("Size of userList: "+userList.size());
             for (User user : userList) {
                 doMsgRes(user.getUserName(),msg);
             }
             //pw.write("msg::"+msg);
         }
         // Insert code to find the right users in the userlist
-        pw.write("msg:" + msg);
+        //pw.write("msg:" + msg);
     }
 
     public void doMsgRes(String msgSender, String msg) {

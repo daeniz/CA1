@@ -62,7 +62,7 @@ public class InputInterpreter implements Observer{
             //if username assigned ignore login with message.
         }
         for (User user1 : userList) {
-            if(user1.getUserName().contentEquals(inputSplit[1])){
+            if(user1!=null && user1.getUserName().contentEquals(inputSplit[1])){
                 System.out.println("User already exists");
                 //how many tries?
                 return;
