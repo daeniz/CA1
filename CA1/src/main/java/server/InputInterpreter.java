@@ -17,10 +17,12 @@ import java.util.Observer;
 public class InputInterpreter implements Observer{
     OutputCreator oc;
     List<User> userList;
+    User user;
     
-    public InputInterpreter(PrintWriter pw, List<User> userList){   // This is not elegant, let us debate!
-        oc = new OutputCreator(pw,userList);
+    public InputInterpreter(User user, List<User> userList){   // This is not elegant, let us debate!
+        oc = new OutputCreator(user,userList);
         this.userList=userList;
+        this.user = user;
     }
     
     public void processInput(String input) {
@@ -37,7 +39,7 @@ public class InputInterpreter implements Observer{
                 break;
             case "LOGIN":
                 System.out.println("Do LOGIN");
-                //Do stuff
+                doLogin(inputSplit);
                 break;
             case "LOGOUT":
                 //Do stuff
@@ -55,7 +57,15 @@ public class InputInterpreter implements Observer{
         
         oc.doMsg(msg, users);   //Call the OutputCreator with the needed parameters
     }
-    public void doLogin(){
+    public void doLogin(String[] inputSplit){
+        if (user.getUserName()!=null){
+            //if username assigned ignore login.
+        }
+        for (User user1 : userList) {
+            if(user1.getUserName().contentEquals(inputSplit[1])){
+                System.out.println("User already exists");
+            }
+        }
         //check if already logged in
     }
         
