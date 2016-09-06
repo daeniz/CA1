@@ -15,9 +15,9 @@ import java.util.Observer;
  * @author daniel
  */
 public class InputInterpreter implements Observer{
-    OutputCreator oc;
-    List<User> userList;
-    User user;
+    private OutputCreator oc;
+    private List<User> userList;
+    private User user;
     
     public InputInterpreter(User user, List<User> userList){   // This is not elegant, let us debate!
         oc = new OutputCreator(user,userList);
