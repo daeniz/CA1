@@ -104,4 +104,8 @@ public class OutputCreator {
             client.getPw().println(clients);
         }
     }
+
+    public void doInvalidInput() {
+        user.getPw().println("Input was invalid. Learn to type and try again!");
+                }
 }

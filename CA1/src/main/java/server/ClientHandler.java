@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Observable;
 import java.util.Scanner;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -38,12 +39,24 @@ public class ClientHandler extends Observable implements Runnable {
             InputInterpreter ii = new InputInterpreter(user, userList);
             this.addObserver(ii);
             String message = "";
-            while (socket.isConnected()&&!message.equals("LOGOUT")) {
-                message = scan.nextLine();
+            while (!socket.isInputShutdown()&&!message.equals("LOGOUT")) {
+                try{
+                    message = scan.nextLine();
+                    if (message.isEmpty()) {
+                        break;
+                    }
+                }
+                catch(NoSuchElementException ex){
+                    setChanged();
+                notifyObservers("LOGOUT");
+                    
+                    return;
+                }
                 setChanged();
                 notifyObservers(message);                                       //Observer pattern seems pointless now that I think about it. I'm just quite fond of it.
 
             }
+            
             
         }
         user.getPw().close();
