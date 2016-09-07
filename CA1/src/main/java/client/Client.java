@@ -16,14 +16,15 @@ import static java.lang.System.in;
 import java.net.Socket;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static jdk.nashorn.internal.objects.NativeRegExp.ignoreCase;
 
 /**
- *Mainly authored by Jarmo, implemented according to a StackOverflow post
- * on the topic
- * http://stackoverflow.com/a/33853246
+ * Mainly authored by Jarmo, implemented according to a StackOverflow post on
+ * the topic http://stackoverflow.com/a/33853246
+ *
  * @author danie
  */
 public class Client extends Thread implements Observer {
@@ -38,11 +39,17 @@ public class Client extends Thread implements Observer {
     private static final BufferedReader inputLine = null;
     private static final boolean closed = false;
 
+    private static String host;
+    private static int port;
+
+    Client(String host, int port) {
+        host = this.host;
+        port = this.port;
+    }
+
     public static void main(String[] args) throws IOException {
 
         //Sets the parameters, if nothing is given defaults to local and 9000
-        String host;
-        int port;
         if (args.length == 2) {
             host = args[0];
             port = Integer.parseInt(args[1]);
@@ -56,45 +63,70 @@ public class Client extends Thread implements Observer {
         BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
 
-        Thread input = new Thread(() -> {
-            String MSG;
-
-            try {
-                while ((MSG = inp.readLine()) != ignoreCase("STOP")) {
-                    System.out.println(MSG);
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+//        Thread input = new Thread(() -> {
+//            String MSG;
+//
+//            try {
+//                while ((MSG = inp.readLine()) != ignoreCase("STOP")) {
+//                    System.out.println(MSG);
+//                }
+//            } catch (IOException ex) {
+//                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//
+//        }
+//        );
+//        input.start();
+//
+//        String userName = "User" + socket;
+//        
+//        Thread output = new Thread(() -> {
+//        String MSG;
+//        try {
+//
+//            while (!"LOGOUT".equals(MSG = stdIn.readLine())) {
+//                for (int i = 0; i < MSG.length(); i++) {
+//                    System.out.print("\b");
+//                }
+//                out.write(":receivers:" + MSG);
+//                out.flush();
+//
+//            }}
+//            catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        });
+        Scanner scan = new Scanner(stdIn);
+        while (true) {
+            System.out.println("--");
+            String MSG = scan.nextLine();
+            if (MSG.equals("LOGOUT")) {
+                out.write("LOGOUT:");
+                break;
             }
-
+            socket.close();
         }
-        );
-        input.start();
 
-        String userName = "User" + socket;
-        String MSG;
+        class ListenServer extends Thread {
 
-        try {
-
-            while (!"LOGOUT".equals(MSG = stdIn.readLine())) {
-                for (int i = 0; i < MSG.length(); i++) {
-                    System.out.print("\b");
+            public void run() {
+                while (true) {
+                    try {
+                        String MSG = (String) inp.readLine();
+                        System.out.println(MSG);
+                        System.out.println("--");
+                    } catch (IOException ex) {
+                        Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    break;
                 }
-                out.write(":receivers:" + MSG);
-                out.flush();
-
             }
-
-        }
-        
-        catch (Exception e) {
-                e.printStackTrace();
-            }}
-
-        @Override
-        public void update
-        (Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
     }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+}
