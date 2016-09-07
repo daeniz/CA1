@@ -59,10 +59,12 @@ public class InputInterpreter implements Observer {
 
         String[] users = inputSplit[1].split(",");  //Split so we have an array of users to send to
         String msg = "";
-        if (inputSplit[2] != null && inputSplit.length > 0) {
+        if (inputSplit.length>=3 && inputSplit[2] != null && inputSplit.length > 0) {
             msg = inputSplit[2];  // If there is a message...
+            oc.doMsg(msg, users);
         }
-        oc.doMsg(msg, users);   //Call the OutputCreator with the needed parameters
+        else oc.doInvalidInput();
+           //Call the OutputCreator with the needed parameters
     }
     
     public void doLogin(String[] inputSplit) {
