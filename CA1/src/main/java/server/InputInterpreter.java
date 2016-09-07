@@ -45,6 +45,11 @@ public class InputInterpreter implements Observer {
             case "LOGOUT":
                 logout();
                 break;
+            default:
+                if(user.getUserSocket().isClosed()){
+                    logout();
+                }
+                
         }
         
     }

@@ -5,84 +5,96 @@
  */
 package client;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.net.InetAddress;
+import static java.lang.System.in;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Scanner;
-import server.Server;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import static jdk.nashorn.internal.objects.NativeRegExp.ignoreCase;
 
 /**
- *
+ *Mainly authored by Jarmo, implemented according to a StackOverflow post
+ * on the topic
+ * http://stackoverflow.com/a/33853246
  * @author danie
  */
-public class Client implements Observer {
+public class Client extends Thread implements Observer {
 
-    static Socket socket;
-    private int port;
-    private InetAddress serverAddress;
-    private Scanner input;
-    private PrintWriter output;
+    //Client's socket
+    private static final Socket clientSocket = null;
+    //Output stream
+    private static final PrintStream os = null;
+    //Input stream
+    private static final DataInputStream is = null;
 
-    public void connect(String address, int port) throws UnknownHostException, IOException {
-        this.port = port;
-        serverAddress = InetAddress.getByName(address);
-        socket = new Socket(serverAddress, port);
-        input = new Scanner(socket.getInputStream());
-        output = new PrintWriter(socket.getOutputStream(), true);
-    }
-
-    public void send(String msg) {
-        output.println(msg);
-    }
-
-    //Implement the stop method here
-    public String receive() throws IOException {
-        //This blocks?
-        String msg = input.nextLine();
-        if (msg.equals("STOP")) {
-            socket.close();
-
-        }
-        return msg;
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    private static final BufferedReader inputLine = null;
+    private static final boolean closed = false;
 
     public static void main(String[] args) throws IOException {
-        Scanner userInput = new Scanner(socket.getInputStream());
-        String ip = "localHost";
-        int port = 9000;
-        
+
+        //Sets the parameters, if nothing is given defaults to local and 9000
+        String host;
+        int port;
         if (args.length == 2) {
-             ip = args[0];
-         port = Integer.parseInt(args[1]);
-        }
-        
-        if (args.length == 1) 
-        {
-            ip = args[0];
+            host = args[0];
+            port = Integer.parseInt(args[1]);
+        } else {
+            host = "localhost";
             port = 9000;
         }
-        
+
+        Socket socket = new Socket(host, port);
+        BufferedReader inp = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+        BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+
+        Thread input = new Thread(() -> {
+            String MSG;
+
+            try {
+                while ((MSG = inp.readLine()) != ignoreCase("STOP")) {
+                    System.out.println(MSG);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        );
+        input.start();
+
+        String userName = "User" + socket;
+        String MSG;
+
         try {
-        Client client = new Client();
-        client.connect(ip, port);
-            System.out.println("Please enter your unique Username");
-            String userName = userInput.nextLine();
-            client.send("LOGIN:" + userName);
+
+            while (!"LOGOUT".equals(MSG = stdIn.readLine())) {
+                for (int i = 0; i < MSG.length(); i++) {
+                    System.out.print("\b");
+                }
+                out.write(":receivers:" + MSG);
+                out.flush();
+
+            }
+
         }
         
-        catch (IOException ex) {
-        
+        catch (Exception e) {
+                e.printStackTrace();
+            }}
+
+        @Override
+        public void update
+        (Observable o, Object arg) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
-        
+
     }
-}

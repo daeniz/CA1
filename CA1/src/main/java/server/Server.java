@@ -20,11 +20,17 @@ import java.util.logging.Logger;
  */
 public class Server {       //Very much just the basic start of the Echo-server
 
+    private static boolean serverRunning = true;
+
+    public static void stopServer() {
+        serverRunning = false;
+    }
+
     public static void main(String[] args) {
-    List<User> userList = new CopyOnWriteArrayList();    
-    String ip;
-    int port;
-        if(args.length ==2){
+        List<User> userList = new CopyOnWriteArrayList();
+        String ip;
+        int port;
+        if (args.length == 2) {
             ip = args[0];
             port = Integer.parseInt(args[1]);
         } else {
@@ -36,14 +42,14 @@ public class Server {       //Very much just the basic start of the Echo-server
             Log.setLogFile("logFile.txt", "ServerLog");
             Logger.getLogger(Log.LOG_NAME).log(Level.INFO, "Starting the Server");
             ss = new ServerSocket();
-            ss.bind(new InetSocketAddress(ip,port));
-            System.out.println("Server started!, listening on "+port+ " "+", bound to "+ ip);  // Rework for logger
-        while (true){
-        Socket socket = ss.accept();
-        Logger.getLogger(Log.LOG_NAME).log(Level.INFO, "New client connected"); //Add the connected client's name here
-        new Thread(new ClientHandler(socket, userList)).start();
-        //handleClient(socket);  // Needs multithreading
-        }
+            ss.bind(new InetSocketAddress(ip, port));
+            System.out.println("Server started!, listening on " + port + " " + ", bound to " + ip);  // Rework for logger
+            while (serverRunning) {
+                Socket socket = ss.accept();
+                Logger.getLogger(Log.LOG_NAME).log(Level.INFO, "New client connected"); //Add the connected client's name here
+                new Thread(new ClientHandler(socket, userList)).start();
+                //handleClient(socket);  // Needs multithreading
+            }
         } catch (IOException ex) {
             //In case of an error this will log it
             Logger.getLogger(Log.LOG_NAME).log(Level.SEVERE, null, ex);
