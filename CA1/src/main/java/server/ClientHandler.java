@@ -48,6 +48,7 @@ public class ClientHandler extends Observable implements Runnable {
                 }
                 catch(NoSuchElementException ex){
                     setChanged();
+                    Logger.getLogger(Log.LOG_NAME).log(Level.INFO, "Client "+user.getUserSocket().getInetAddress().getHostAddress()+ " logged out in an unintended manner");
                 notifyObservers("LOGOUT");
                     
                     return;
@@ -61,6 +62,7 @@ public class ClientHandler extends Observable implements Runnable {
         }
         user.getPw().close();
         socket.close();
+        
 
     }
 
@@ -76,7 +78,7 @@ public class ClientHandler extends Observable implements Runnable {
     public void run() {
         try {
             handleClient(socket);
-            System.out.println("Client handled");
+            Logger.getLogger(Log.LOG_NAME).log(Level.INFO, "Client handled");
         } catch (IOException ex) {
             //Insert logging
         }

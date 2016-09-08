@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -41,12 +43,12 @@ public class OutputCreator {
                     return;
                 }
             }
-                System.out.println("User not FOUND! You nitwitted SOB");
+            Logger.getLogger(Log.LOG_NAME).log(Level.SEVERE, "Trying to send message to none-existing user!");
                 return;
             }
             System.out.println("Sending to everyone!");
             for (User client : userList) {
-                System.out.println("Sending to: "+client.getUserName());
+                Logger.getLogger(Log.LOG_NAME).log(Level.INFO, user.getUserName()+"Sending to: "+client.getUserName());
                 doMsgRes(client, user.getUserName(),msg);
                 //return;
             }
@@ -110,6 +112,7 @@ public class OutputCreator {
     }
 
     public void doInvalidInput() {
+        Logger.getLogger(Log.LOG_NAME).log(Level.SEVERE, "Trying to send invalid input");
         user.getPw().println("Input was invalid. Learn to type and try again!");
                 }
 }

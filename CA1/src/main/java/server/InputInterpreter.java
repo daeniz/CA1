@@ -9,6 +9,8 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -75,6 +77,7 @@ public class InputInterpreter implements Observer {
         }
         if (user.getUserName() != null) {
             //if username assigned ignore login with message.
+            Logger.getLogger(Log.LOG_NAME).log(Level.INFO, user.getUserName() +" at "+user.getUserSocket().getInetAddress().toString()+"Tried to log in more than once");
             user.getPw().println("MSGRES:Server:You are already logged in!");
             return;
         }
