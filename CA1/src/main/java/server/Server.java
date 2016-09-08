@@ -43,7 +43,7 @@ public class Server {       //Very much just the basic start of the Echo-server
             Logger.getLogger(Log.LOG_NAME).log(Level.INFO, "Starting the Server");
             ss = new ServerSocket();
             ss.bind(new InetSocketAddress(ip, port));
-            System.out.println("Server started!, listening on " + port + " " + ", bound to " + ip);  // Rework for logger
+            Logger.getLogger(Log.LOG_NAME).log(Level.INFO, "Server started!, listening on " + port + " " + ", bound to " + ip);  // Rework for logger
             while (serverRunning) {
                 Socket socket = ss.accept();
                 Logger.getLogger(Log.LOG_NAME).log(Level.INFO, "New client connected"); //Add the connected client's name here

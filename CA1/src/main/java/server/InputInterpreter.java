@@ -33,10 +33,9 @@ public class InputInterpreter implements Observer {
             return;
         }
         String[] inputSplit = input.split(":");
-        System.out.println("Command read as: " + inputSplit[0]);
+        Logger.getLogger(Log.LOG_NAME).log(Level.INFO, "Command from " +user.getUserName()+"read as: " + inputSplit[0]);
         switch (inputSplit[0]) {
             case "MSG":
-                System.out.println("Do msg");
                 doMsg(inputSplit);
                 //Do stuff
                 break;
@@ -90,8 +89,9 @@ public class InputInterpreter implements Observer {
             
         }
         //Create user
-        System.out.println("Created user");
+        Logger.getLogger(Log.LOG_NAME).log(Level.INFO, "Created user");
         user.setUserName(inputSplit[1]);
+        Logger.getLogger(Log.LOG_NAME).log(Level.INFO, "Set username: "+user.getUserName());
         oc.userLoggedInMsgRes(user);
         //user.getPw().println("Welcome " + user.getUserName() + "!");
         
