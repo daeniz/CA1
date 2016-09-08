@@ -38,11 +38,18 @@ public class Client extends Thread implements Observer {
     private static final BufferedReader inputLine = null;
     private static final boolean closed = false;
 
+    private static String host;
+    private static int port;
+    
+    Client(String host, int port) {
+    host = this.host;
+    port = this.port;
+    }
+    
     public static void main(String[] args) throws IOException {
 
         //Sets the parameters, if nothing is given defaults to local and 9000
-        String host;
-        int port;
+        
         if (args.length == 2) {
             host = args[0];
             port = Integer.parseInt(args[1]);
@@ -72,8 +79,9 @@ public class Client extends Thread implements Observer {
         input.start();
 
         String userName = "User" + socket;
+        
+        Thread output = new Thread(() -> {
         String MSG;
-
         try {
 
             while (!"LOGOUT".equals(MSG = stdIn.readLine())) {
@@ -83,18 +91,20 @@ public class Client extends Thread implements Observer {
                 out.write(":receivers:" + MSG);
                 out.flush();
 
-            }
-
-        }
-        
-        catch (Exception e) {
-                e.printStackTrace();
             }}
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        
+        
 
-        @Override
+        
+
+    }
+@Override
         public void update
         (Observable o, Object arg) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
-
-    }
+}
