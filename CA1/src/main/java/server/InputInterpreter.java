@@ -56,8 +56,8 @@ public class InputInterpreter implements Observer {
     
     public void doMsg(String[] inputSplit) {
         //Check: if logged in->cont //Else blow up
-        if (inputSplit.length<2) System.out.println("");
-
+        if (inputSplit.length<2)Logger.getLogger(Log.LOG_NAME).log(Level.INFO, "Some retard tried to break protocol"); 
+        else{
         String[] users = inputSplit[1].split(",");  //Split so we have an array of users to send to
         String msg = "";
         if (inputSplit.length>=3 && inputSplit[2] != null && inputSplit.length > 0) {
@@ -66,6 +66,7 @@ public class InputInterpreter implements Observer {
         }
         else oc.doInvalidInput();
            //Call the OutputCreator with the needed parameters
+    }
     }
     
     public void doLogin(String[] inputSplit) {
