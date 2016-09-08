@@ -28,6 +28,7 @@ public class OutputCreator {
             
     
     public void doMsg(String msg, String[] users){
+        if (user==null || user.getUserName()==null) return;
         System.out.println("users length: "+users.length);
         if (users.length==1)
         {
@@ -88,8 +89,8 @@ public class OutputCreator {
 
     public void doMsgRes(User receiver, String msgSender, String msg) {
         System.out.println("Do MSG Response");
-        System.out.println("msgRes:" + msgSender + ":" + msg);
-        receiver.getPw().println("msgRes:" + msgSender + ":" + msg);
+        System.out.println("MSGRES:" + msgSender + ":" + msg);
+        receiver.getPw().println("MSGRES:" + msgSender + ":" + msg);
     }
     
     

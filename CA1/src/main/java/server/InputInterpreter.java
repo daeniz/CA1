@@ -56,6 +56,7 @@ public class InputInterpreter implements Observer {
     
     public void doMsg(String[] inputSplit) {
         //Check: if logged in->cont //Else blow up
+        if (inputSplit.length<2) System.out.println("");
 
         String[] users = inputSplit[1].split(",");  //Split so we have an array of users to send to
         String msg = "";
