@@ -33,14 +33,13 @@ public class InputInterpreter implements Observer {
             return;
         }
         String[] inputSplit = input.split(":");
-        Logger.getLogger(Log.LOG_NAME).log(Level.INFO, "Command from " +user.getUserName()+"read as: " + inputSplit[0]);
+        Logger.getLogger(Log.LOG_NAME).log(Level.INFO, "Command from " +user.getUserName()+" read as: " + inputSplit[0]);
         switch (inputSplit[0]) {
             case "MSG":
                 doMsg(inputSplit);
                 //Do stuff
                 break;
             case "LOGIN":
-                System.out.println("Do LOGIN");
                 doLogin(inputSplit);
                 break;
             case "LOGOUT":
@@ -82,6 +81,7 @@ public class InputInterpreter implements Observer {
         }
         for (User user1 : userList) {
             if (user1.getUserName() != null && user1.getUserName().contentEquals(inputSplit[1])) {
+                Logger.getLogger(Log.LOG_NAME).log(Level.INFO, "Username attempted to be re-used: "+user1.getUserName());
                 user.getPw().println("MSGRES:Server:Username exists. Try again!");
                 //how many tries?
                 return;

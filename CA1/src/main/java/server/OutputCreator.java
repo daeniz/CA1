@@ -21,68 +21,60 @@ public class OutputCreator {
     User user;
     List<User> userList;
     PrintWriter pw;
-    
-    public OutputCreator(User user,List<User> userList){
-        this.user=user;
-        this.userList=userList;
+
+    public OutputCreator(User user, List<User> userList) {
+        this.user = user;
+        this.userList = userList;
     }
-            
-            
-    
-    public void doMsg(String msg, String[] users){
-        if (user==null || user.getUserName()==null) return;
-        System.out.println("users length: "+users.length);
-        if (users.length==1)
-        {
-            if (!users[0].equals("")){
-            System.out.println("users[0]:"+users[0]+".");
-            for (User client : userList) {
-                if (client.getUserName().equals(users[0])){
-                    System.out.println("Found "+client.getUserName());
-                    doMsgRes(client, user.getUserName(),msg);
-                    return;
+
+    public void doMsg(String msg, String[] users) {
+        if (user == null || user.getUserName() == null) {
+            return;
+        }
+        if (users.length == 1) {
+            if (!users[0].equals("")) {
+                System.out.println("users[0]:" + users[0] + ".");
+                for (User client : userList) {
+                    if (client.getUserName().equals(users[0])) {
+                        doMsgRes(client, user.getUserName(), msg);
+                        return;
+                    }
                 }
-            }
-            Logger.getLogger(Log.LOG_NAME).log(Level.SEVERE, "Trying to send message to none-existing user!");
+                Logger.getLogger(Log.LOG_NAME).log(Level.SEVERE, "Trying to send message to none-existing user!");
                 return;
             }
-            System.out.println("Sending to everyone!");
             for (User client : userList) {
-                Logger.getLogger(Log.LOG_NAME).log(Level.INFO, user.getUserName()+"Sending to: "+client.getUserName());
-                doMsgRes(client, user.getUserName(),msg);
+                Logger.getLogger(Log.LOG_NAME).log(Level.INFO, user.getUserName() + "Sending to: " + client.getUserName());
+                doMsgRes(client, user.getUserName(), msg);
                 //return;
             }
-            
-        }
-        else if (users.length>1){
+
+        } else if (users.length > 1) {
             for (int i = 0; i < users.length; i++) {
                 for (User client : userList) {
-                    if (client.getUserName().equals(users[i])){
-                        doMsgRes(client, user.getUserName(),msg);
+                    if (client.getUserName() != null && client.getUserName().equals(users[i])) {
+                        doMsgRes(client, user.getUserName(), msg);
                     }
                 }
             }
         }
-        
-        
+
         // Insert code to find the right users in the userlist
         //pw.write("msg:" + msg);
     }
-    
-    
-    
-    public void userLoggedInMsgRes(User user){
+
+    public void userLoggedInMsgRes(User user) {
         for (User user1 : userList) {
-            if(user1 != user ){
+            if (user1 != user) {
                 user1.getPw().println("MSGRES:Server: " + user.getUserName() + " logged in!");
             }
         }
         user.getPw().println("MSGRES:Server:Welcome " + user.getUserName() + "!");
     }
-    
-    public void userLoggedOutMsgRes(User user){
+
+    public void userLoggedOutMsgRes(User user) {
         for (User user1 : userList) {
-            if(user1 != user ){
+            if (user1 != user) {
                 user1.getPw().println("MSGRES:Server: " + user.getUserName() + " logged out!");
             }
         }
@@ -94,17 +86,17 @@ public class OutputCreator {
         System.out.println("MSGRES:" + msgSender + ":" + msg);
         receiver.getPw().println("MSGRES:" + msgSender + ":" + msg);
     }
-    
-    
-    public void sendClientList(){
-        String clients="CLIENTLIST:";
+
+    public void sendClientList() {
+        String clients = "CLIENTLIST:";
         boolean first = true;   //Boolean for controlling the , seperator so it only comes between clientnames
         for (User client : userList) {
-            if (first){
-                clients+=client.getUserName();
-                first=false;
+            if (first) {
+                clients += client.getUserName();
+                first = false;
+            } else {
+                clients += "," + client.getUserName();
             }
-            else clients+=","+client.getUserName();
         }
         for (User client : userList) {
             client.getPw().println(clients);
@@ -114,5 +106,5 @@ public class OutputCreator {
     public void doInvalidInput() {
         Logger.getLogger(Log.LOG_NAME).log(Level.SEVERE, "Trying to send invalid input");
         user.getPw().println("Input was invalid. Learn to type and try again!");
-                }
+    }
 }
