@@ -28,39 +28,68 @@ public class OutputCreator {
     }
 
     public void doMsg(String msg, String[] users) {
-        if (user == null || user.getUserName() == null) {
+        String command=null;
+        User[] receivers = null;
+        if (checkInvalidUser(user)) {
             return;
         }
-        if (users.length == 1) {
+        else if (users.length == 1) {
             if (!users[0].equals("")) {
-                System.out.println("users[0]:" + users[0] + ".");
-                for (User client : userList) {
-                    if (client.getUserName().equals(users[0])) {
-                        doMsgRes(client, user.getUserName(), msg);
-                        return;
-                    }
-                }
-                Logger.getLogger(Log.LOG_NAME).log(Level.SEVERE, "Trying to send message to none-existing user!");
-                return;
+                receivers=getSingleUser(users[0]);
             }
-            for (User client : userList) {
-                Logger.getLogger(Log.LOG_NAME).log(Level.INFO, user.getUserName() + "Sending to: " + client.getUserName());
-                doMsgRes(client, user.getUserName(), msg);
-                //return;
-            }
-
-        } else if (users.length > 1) {
-            for (int i = 0; i < users.length; i++) {
-                for (User client : userList) {
-                    if (client.getUserName() != null && client.getUserName().equals(users[i])) {
-                        doMsgRes(client, user.getUserName(), msg);
-                    }
-                }
-            }
+            else receivers=getAll();
+        } 
+        else if (users.length > 1) {
+            System.out.println("users.length>1");
+            receivers=getMoreUsers(users);
         }
+        command = getMsgRes(user.getUserName(),msg);
+        executeCommands(command, receivers);
 
         // Insert code to find the right users in the userlist
         //pw.write("msg:" + msg);
+    }
+    
+    public void executeCommands(String command, User[] users){
+        if (command!=null && users!=null){
+        for (int i = 0; i < users.length; i++) {
+            if (!checkInvalidUser(users[i]) && command!=null) users[i].getPw().println(command);
+        }
+        }
+    }
+    
+    public User[] getSingleUser(String receiver){
+        User[] receiveUser = new User[1];
+        for (User client : userList) {
+                    if (!checkInvalidUser(client) && client.getUserName().equals(receiver)) {
+                        receiveUser[0]=client;
+                        return receiveUser;                        
+                    }
+                }
+                Logger.getLogger(Log.LOG_NAME).log(Level.SEVERE, "Trying to send message to none-existing user!");
+                return null;
+    }
+    
+    public User[] getMoreUsers(String[] userStrings){
+        User[] users = new User[userStrings.length];
+        int count=0;
+        for (int i = 0; i < users.length; i++) {
+                for (User client : userList) {
+                    if (!checkInvalidUser(client) && client.getUserName().equals(userStrings[i])) {
+                        users[count] = client;
+                        count++;
+                    }
+                }
+            }
+        return users;
+    }
+    
+    public User[] getAll(){
+        return userList.toArray(new User[0]);
+    }
+    
+    public boolean checkInvalidUser(User user){
+        return (user == null || user.getUserName() == null);
     }
 
     public void userLoggedInMsgRes(User user) {
@@ -81,13 +110,11 @@ public class OutputCreator {
         user.getPw().println("MSGRES:Server:Godbye " + user.getUserName() + "!");
     }
 
-    public void doMsgRes(User receiver, String msgSender, String msg) {
-        System.out.println("Do MSG Response");
-        System.out.println("MSGRES:" + msgSender + ":" + msg);
-        receiver.getPw().println("MSGRES:" + msgSender + ":" + msg);
+    public String getMsgRes(String msgSender, String msg) {
+        //receiver.getPw().println("MSGRES:" + msgSender + ":" + msg);
+        return "MSGRES:" + msgSender + ":" + msg;
     }
-
-    public void sendClientList() {
+    public String getClients(){
         String clients = "CLIENTLIST:";
         boolean first = true;   //Boolean for controlling the , seperator so it only comes between clientnames
         for (User client : userList) {
@@ -98,13 +125,26 @@ public class OutputCreator {
                 clients += "," + client.getUserName();
             }
         }
+        
+        return clients;
+    }
+
+    public void sendClientList() {
+        String clients= getClients();
         for (User client : userList) {
-            client.getPw().println(clients);
+            //client.getPw().println(clients);
+            sendClientMessage(client,clients);
         }
     }
 
     public void doInvalidInput() {
         Logger.getLogger(Log.LOG_NAME).log(Level.SEVERE, "Trying to send invalid input");
-        user.getPw().println("Input was invalid. Learn to type and try again!");
+        //sendClientMessage(user,"Input was invalid. Learn to type and try again!");
+        //user.getPw().println("Input was invalid. Learn to type and try again!");
+    }
+    
+    
+    public void sendClientMessage(User client, String message){
+        client.getPw().println(message);
     }
 }

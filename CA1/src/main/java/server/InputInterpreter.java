@@ -59,6 +59,11 @@ public class InputInterpreter implements Observer {
         if (inputSplit.length<2)Logger.getLogger(Log.LOG_NAME).log(Level.INFO, "Some retard tried to break protocol"); 
         else{
         String[] users = inputSplit[1].split(",");  //Split so we have an array of users to send to
+            for (int i = 0; i < users.length; i++) {
+                System.out.println("User for receiving: "+users[i]);
+            }
+    
+        
         String msg = "";
         if (inputSplit.length>=3 && inputSplit[2] != null && inputSplit.length > 0) {
             msg = inputSplit[2];  // If there is a message...
