@@ -8,6 +8,7 @@ package server;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,7 +38,7 @@ public class OutputCreator {
             if (!users[0].equals("")) {
                 receivers=getSingleUser(users[0]);
             }
-            else receivers=getAll();
+            else receivers=getAll(filteredUserList(userList));
         } 
         else if (users.length > 1) {
             System.out.println("users.length>1");
@@ -84,8 +85,17 @@ public class OutputCreator {
         return users;
     }
     
-    public User[] getAll(){
-        return userList.toArray(new User[0]);
+    public ArrayList<User> filteredUserList(List<User> list){
+        ArrayList<User> filtered = new ArrayList();
+        for (User user1 : list) {
+            if (user1.getUserName()!=null) filtered.add(user1);
+        }
+        
+        return filtered;
+    }
+    
+    public User[] getAll(List<User> list){
+        return list.toArray(new User[0]);
     }
     
     public boolean checkInvalidUser(User user){
@@ -118,10 +128,10 @@ public class OutputCreator {
         String clients = "CLIENTLIST:";
         boolean first = true;   //Boolean for controlling the , seperator so it only comes between clientnames
         for (User client : userList) {
-            if (first) {
+            if (first && client.getUserName()!=null) {
                 clients += client.getUserName();
                 first = false;
-            } else {
+            } else if (client.getUserName()!=null){
                 clients += "," + client.getUserName();
             }
         }
