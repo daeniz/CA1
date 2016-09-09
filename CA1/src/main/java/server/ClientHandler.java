@@ -51,7 +51,7 @@ public class ClientHandler extends Observable implements Runnable {
                     Logger.getLogger(Log.LOG_NAME).log(Level.INFO, "Client "+user.getUserSocket().getInetAddress().getHostAddress()+ " logged out in an unintended manner");
                 notifyObservers("LOGOUT");
                     
-                    return;
+                    break;
                 }
                 setChanged();
                 notifyObservers(message);                                       //Observer pattern seems pointless now that I think about it. I'm just quite fond of it.
@@ -60,6 +60,7 @@ public class ClientHandler extends Observable implements Runnable {
             
             
         }
+        
         user.getPw().close();
         socket.close();
         
