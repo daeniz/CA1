@@ -72,9 +72,8 @@ public class TestProtocols implements Observer{
         assertTrue(dummyClient.MSGRES!=null);
         boolean loginName=false;
         for (String line : dummyClient.received) {
-            if (line.equals(testName))loginName=true;
+            if (line.startsWith("CLIENTLIST:"))loginName=true;
         }
-        System.out.println(dummyClient.received.size());
         assertTrue(loginName);
         client.logout();
         
@@ -84,8 +83,10 @@ public class TestProtocols implements Observer{
     public void msg(){
         String testName="msgTest";
         DummyObserver dummyClient= new DummyObserver();
-        Client.ClientController client = new Client.ClientController(dummyClient,"localhost",7000);
-        client.runClient();
+        Client.ClientController client;
+        try {
+            client = new Client.ClientController(dummyClient,"localhost",7000);
+            client.runClient();
         System.out.println("MSG:Test");
         client.login(testName);
         client.sendMessage(testName+":msg");
@@ -94,19 +95,53 @@ public class TestProtocols implements Observer{
         } catch (InterruptedException ex) {
             System.out.println("Interrupted");
         }
-        assertTrue(dummyClient.MSGRES!=null);
+        //assertTrue(dummyClient.MSGRES!=null);
         boolean msg=false;
         for (String line : dummyClient.received) {
-            if (line.equals(testName))msg=true;
+            if (line.equals("MSGRES:"+testName+":msg"))msg=true;
         }
-        System.out.println(dummyClient.received.size());
         assertTrue(msg);
         client.logout();
+        } catch (IOException ex) {
+            Logger.getLogger(TestProtocols.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }
+    @Test
+    public void msgAll(){
+        String testName="msgAllTest";
+        DummyObserver dummyClient= new DummyObserver();
+        Client.ClientController client;
+        try {
+            client = new Client.ClientController(dummyClient,"localhost",7000);
+            client.runClient();
+        System.out.println("MSG::Test");
+        client.login(testName);
+        client.sendMessage(":msgAll");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            System.out.println("Interrupted");
+        }
+        //assertTrue(dummyClient.MSGRES!=null);
+        boolean msg=false;
+        for (String line : dummyClient.received) {
+            if (line.equals("MSGRES:"+testName+":msgAll"))msg=true;
+        }
+        assertTrue(msg);
+        client.logout();
+        } catch (IOException ex) {
+            Logger.getLogger(TestProtocols.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
     }
 
     @Override
     public void update (Observable o, Object arg) {
         System.out.println("NOTIFIED");
+        
         
     }
     

@@ -1,38 +1,56 @@
-sep. 09, 2016 1:50:59 PM server.Server main
+sep. 11, 2016 10:41:59 AM server.Server main
 INFO: Starting the Server
-sep. 09, 2016 1:50:59 PM server.Server main
+sep. 11, 2016 10:41:59 AM server.Server main
 INFO: Server started!, listening on 7000 , bound to localhost
-sep. 09, 2016 1:50:59 PM server.Server main
+sep. 11, 2016 10:42:00 AM server.Server main
 INFO: New client connected
-sep. 09, 2016 1:50:59 PM server.InputInterpreter processInput
+sep. 11, 2016 10:42:00 AM server.InputInterpreter processInput
 INFO: Command from null read as: LOGIN
-sep. 09, 2016 1:50:59 PM server.InputInterpreter doLogin
+sep. 11, 2016 10:42:00 AM server.InputInterpreter doLogin
 INFO: Created user
-sep. 09, 2016 1:50:59 PM server.InputInterpreter doLogin
-INFO: Set username: msgTest
-sep. 09, 2016 1:50:59 PM server.InputInterpreter processInput
-INFO: Command from msgTest read as: MSG
-sep. 09, 2016 1:51:00 PM server.InputInterpreter processInput
-INFO: Command from msgTest read as: LOGOUT
-sep. 09, 2016 1:51:00 PM server.ClientHandler handleClient
+sep. 11, 2016 10:42:00 AM server.InputInterpreter doLogin
+INFO: Set username: msgAllTest
+sep. 11, 2016 10:42:00 AM server.InputInterpreter processInput
+INFO: Command from msgAllTest read as: MSG
+sep. 11, 2016 10:42:01 AM server.InputInterpreter processInput
+INFO: Command from msgAllTest read as: LOGOUT
+sep. 11, 2016 10:42:01 AM server.ClientHandler handleClient
 INFO: Client 127.0.0.1 logged out in an unintended manner
-sep. 09, 2016 1:51:00 PM server.InputInterpreter processInput
-INFO: Command from msgTest read as: LOGOUT
-sep. 09, 2016 1:51:00 PM server.Server main
-INFO: New client connected
-sep. 09, 2016 1:51:00 PM server.ClientHandler run
+sep. 11, 2016 10:42:01 AM server.InputInterpreter processInput
+INFO: Command from msgAllTest read as: LOGOUT
+sep. 11, 2016 10:42:01 AM server.ClientHandler run
 INFO: Client handled
-sep. 09, 2016 1:51:00 PM server.InputInterpreter processInput
+sep. 11, 2016 10:42:01 AM server.Server main
+INFO: New client connected
+sep. 11, 2016 10:42:01 AM server.InputInterpreter processInput
 INFO: Command from null read as: LOGIN
-sep. 09, 2016 1:51:00 PM server.InputInterpreter doLogin
+sep. 11, 2016 10:42:01 AM server.InputInterpreter doLogin
 INFO: Created user
-sep. 09, 2016 1:51:00 PM server.InputInterpreter doLogin
-INFO: Set username: loginTest
-sep. 09, 2016 1:51:01 PM server.InputInterpreter processInput
-INFO: Command from loginTest read as: LOGOUT
-sep. 09, 2016 1:51:01 PM server.ClientHandler handleClient
+sep. 11, 2016 10:42:01 AM server.InputInterpreter doLogin
+INFO: Set username: msgTest
+sep. 11, 2016 10:42:01 AM server.InputInterpreter processInput
+INFO: Command from msgTest read as: MSG
+sep. 11, 2016 10:42:02 AM server.InputInterpreter processInput
+INFO: Command from msgTest read as: LOGOUT
+sep. 11, 2016 10:42:02 AM server.ClientHandler handleClient
 INFO: Client 127.0.0.1 logged out in an unintended manner
-sep. 09, 2016 1:51:01 PM server.InputInterpreter processInput
+sep. 11, 2016 10:42:02 AM server.InputInterpreter processInput
+INFO: Command from msgTest read as: LOGOUT
+sep. 11, 2016 10:42:02 AM server.ClientHandler run
+INFO: Client handled
+sep. 11, 2016 10:42:02 AM server.Server main
+INFO: New client connected
+sep. 11, 2016 10:42:02 AM server.InputInterpreter processInput
+INFO: Command from null read as: LOGIN
+sep. 11, 2016 10:42:02 AM server.InputInterpreter doLogin
+INFO: Created user
+sep. 11, 2016 10:42:02 AM server.InputInterpreter doLogin
+INFO: Set username: loginTest
+sep. 11, 2016 10:42:03 AM server.InputInterpreter processInput
 INFO: Command from loginTest read as: LOGOUT
-sep. 09, 2016 1:51:01 PM server.ClientHandler run
+sep. 11, 2016 10:42:03 AM server.ClientHandler handleClient
+INFO: Client 127.0.0.1 logged out in an unintended manner
+sep. 11, 2016 10:42:03 AM server.InputInterpreter processInput
+INFO: Command from loginTest read as: LOGOUT
+sep. 11, 2016 10:42:03 AM server.ClientHandler run
 INFO: Client handled

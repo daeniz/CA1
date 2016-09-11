@@ -17,11 +17,20 @@ public class DummyObserver implements Observer {
 String MSGRES;
 ArrayList<String> received = new ArrayList();
 
+public DummyObserver(){
+    //System.out.println(this.getClass().getName());
+}
     @Override
     public void update(Observable o, Object arg) {
+        //System.out.println(o.getClass().getName());
+        if(!o.getClass().getName().equals("Client.Interpreter")){
+        
         System.out.println(arg.toString());
         MSGRES=arg.toString();
         received.add(arg.toString());
+        
+        //}
+    }
     }
     
 }
